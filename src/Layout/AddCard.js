@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { readDeck, createCard } from "../utils/api";
 
 function AddCard() {
   const { deckId } = useParams();
   const [deck, setDeck] = useState({});
+  const history = useHistory();
   const initialFormState = {
     front: "",
     back: "",
@@ -37,6 +38,7 @@ function AddCard() {
     event.preventDefault();
     const ac = new AbortController();
     createCard(deckId, formData, ac.signal);
+    history.push(`/decks/${deck.id}`);
     window.location.reload();
   };
 
