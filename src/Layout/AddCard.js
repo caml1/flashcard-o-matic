@@ -5,14 +5,15 @@ import { readDeck, createCard } from "../utils/api";
 function AddCard() {
   const { deckId } = useParams();
   const [deck, setDeck] = useState({});
-  const [formData, setFormData] = useState({
+  const initialFormState = {
     front: "",
     back: "",
-  });
+  };
+  const [formData, setFormData] = useState({ ...initialFormState });
 
+  // sets state of deck to be the desired deck whenever the deckId changes
   useEffect(() => {
     const abortController = new AbortController();
-    
     async function displayDeck() {
       try {
         const response = await readDeck(deckId, abortController.signal);
@@ -21,7 +22,6 @@ function AddCard() {
         console.log(error);
       }
     }
-    
     displayDeck();
     return () => abortController.abort();
   }, [deckId]);
@@ -35,9 +35,8 @@ function AddCard() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
-    const abortController = new AbortController();
-    createCard(deckId, formData, abortController.signal);
+    const ac = new AbortController();
+    createCard(deckId, formData, ac.signal);
     window.location.reload();
   };
 
