@@ -27,8 +27,7 @@
     {
       "id": 3,
       "front": "How do you pass data 'down' to a React child component?",
-      "back": "As properties or props",
-      "deckId": 1
+      "back": "As properties or props 1"
     },
     {
       "front": "What path will match the follow Route?\n<Route>\n  <NotFound />\n</Route>",
@@ -43,10 +42,29 @@
       "id": 5
     },
     {
-      "front": "add card",
-      "back": "back",
-      "deckId": 1,
-      "id": 6
+      "id": 6,
+      "front": "what is a prop",
+      "back": "property"
+    },
+    {
+      "id": 7,
+      "front": "abcde",
+      "back": " HIHIHIHIH"
+    },
+    {
+      "id": 8,
+      "front": "123",
+      "back": "abc efg"
+    },
+    {
+      "id": 9,
+      "front": "abc",
+      "back": "123"
+    },
+    {
+      "id": 10,
+      "front": "abc",
+      "back": "1234"
     }
   ]
 }

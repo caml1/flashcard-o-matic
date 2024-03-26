@@ -69,7 +69,7 @@ function EditCard() {
 
       <h1>Edit Card</h1>
 
-      <CardForm/>
+      <CardForm formInput={card}/>
     </div>
   );
 }

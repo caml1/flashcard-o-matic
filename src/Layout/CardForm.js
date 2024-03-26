@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { readDeck, createCard } from "../utils/api";
+import { readDeck, createCard, updateCard } from "../utils/api";
 
 
 
 function CardForm({ formInput }) {
-    const { deckId } = useParams();
+  const { deckId } = useParams();
   const [deck, setDeck] = useState({});
   const history = useHistory();
   const initialFormState = {
@@ -13,6 +13,18 @@ function CardForm({ formInput }) {
     back: "",
   };
   const [formData, setFormData] = useState({ ...initialFormState });
+  
+  useEffect(() => {
+    if (formInput) {
+      console.log(formInput);
+      setFormData({
+        id: formInput.id,
+        deckId: formInput.deckId,
+        front: formInput.front,
+        back: formInput.back,
+      })
+    }
+  }, [])
 
   // sets state of deck to be the desired deck whenever the deckId changes
   useEffect(() => {
@@ -39,12 +51,20 @@ function CardForm({ formInput }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const ac = new AbortController();
-    createCard(deckId, formData, ac.signal);
+    if (!formInput) {
+      createCard(deckId, formData, ac.signal);
+    } else {
+      console.log("form Data",formData);
+      updateCard(formData, ac.signal);
+    }
     history.push(`/decks/${deck.id}`);
     window.location.reload();
+      
   };
     return (
     <form onSubmit={handleSubmit}>
+       <input type="hidden" id="deckId" name="deckId" value={formData.deckId}></input>
+        <input type="hidden" id="id" name="id" value={formData.id}></input>
         <div className="form-group">
           <label>Front</label>
           <textarea
@@ -66,7 +86,7 @@ function CardForm({ formInput }) {
             placeholder="Back Side of Card"
             name="back"
             onChange={handleChange}
-            value={formData.deckDescription}
+            value={formData.back}
           />
         </div>
         <Link to={`/decks/${deckId}`}>
